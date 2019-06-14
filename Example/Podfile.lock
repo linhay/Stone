@@ -1,0 +1,16 @@
+PODS:
+  - Stone (0.1.0)
+
+DEPENDENCIES:
+  - Stone (from `../`)
+
+EXTERNAL SOURCES:
+  Stone:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Stone: ba77d0de3fe53e3b9e5ea1e113b5dba402224c40
+
+PODFILE CHECKSUM: cf0380d63d4565920f355a30abf80ed34c7f4ef9
+
+COCOAPODS: 1.7.1

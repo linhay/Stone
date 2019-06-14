@@ -1,0 +1,22 @@
+use_frameworks!
+
+target 'Stone_Example' do
+  pod 'Stone', :path => '../'
+  
+  
+end
+
+target 'Stone_Tests' do
+  pod 'Stone', :path => '../'
+  
+end
+
+target 'stone-macOS' do
+  pod 'Stone', :path => '../'
+  
+end
+
+target 'stone-macOSTests' do
+  pod 'Stone', :path => '../'
+  
+end
