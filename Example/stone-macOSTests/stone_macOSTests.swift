@@ -114,9 +114,37 @@ extension stone_macOSTests {
     }
 
     func test_sequence_map_keyPath() {
+
         let list = list_a_z.enumerated().map({ TestKeyPath(id: $0.offset, name: $0.element) })
         assert(list.map(keyPath: \.id)   == list.map({ $0.id }))
         assert(list.map(keyPath: \.name) == list.map({ $0.name }))
+    }
+
+}
+
+
+public struct SQLiteStorage {
+
+
+
+}
+
+// MARK: - Sequence
+extension stone_macOSTests {
+
+    struct DiskFileStorageCodable: Codable,Equatable {
+        var id = ""
+        var name = ""
+    }
+
+    func test_storage_diskFileStorage() {
+        var item = DiskFileStorageCodable()
+        item.id = "id"
+        item.name = name
+
+        var storage = DiskFileStorage(type: .cache(folder: "user"))
+        storage["codable"] = item
+        assert(storage["codable"] == item)
     }
 
 }
