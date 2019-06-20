@@ -180,6 +180,12 @@ public extension DiskFileStorage {
         return true
     }
 
+    func remove(key: String) -> Bool {
+        let url = URL(fileURLWithPath: self.folderPath + key.md5)
+        return (try? self.manager.removeItem(at: url)) == nil
+    }
+
+
     func remove(expired before: Date) -> Bool {
         guard let files = try? self.files() else { return false }
 

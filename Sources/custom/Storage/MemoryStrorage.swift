@@ -22,6 +22,15 @@
 
 import Foundation
 
+class MemoryStrorageBox {
+    let codable: Codable
+
+    init(_ codable: Codable) {
+        self.codable = codable
+    }
+}
+
+
 public class MemoryStrorage {
     
     var cache = NSCache<NSString, AnyObject>()
@@ -34,7 +43,7 @@ public class MemoryStrorage {
 // MARK: - subscript
 public extension MemoryStrorage {
     
-    subscript<T: AnyObject>(_ key: String) -> T? {
+    subscript<T: Codable>(_ key: String) -> T? {
         set { _ = set(value: newValue, for: key) }
         get { return get(key: key) }
     }
@@ -44,17 +53,21 @@ public extension MemoryStrorage {
 // MARK: - set / get with Codable
 public extension MemoryStrorage {
     
-    func set<T: AnyObject>(value: T?, for key: String) -> Bool {
+    func set<T: Codable>(value: T?, for key: String) -> Bool {
         if let value = value {
-            cache.setObject(value, forKey: key as NSString)
+            let box = MemoryStrorageBox(value)
+            cache.setObject(box, forKey: key as NSString)
         }else {
             remove(key: key)
         }
         return true
     }
     
-    func get<T: AnyObject>(key: String) -> T? {
-        return cache.object(forKey: key as NSString) as? T
+    func get<T: Codable>(key: String) -> T? {
+        if  let box = cache.object(forKey: key as NSString) as? MemoryStrorageBox {
+            return box.codable as? T
+        }
+        return nil
     }
     
 }

@@ -22,9 +22,57 @@
 
 import Foundation
 
-class Strorage {
+public class Strorage {
 
     var memory: MemoryStrorage = MemoryStrorage()
     var disk: DiskFileStorage? = nil
 
 }
+
+// MARK: - subscript
+public extension Strorage {
+
+    subscript<T: Codable>(_ key: String) -> T? {
+        set {
+            _ = set(value: newValue, for: key)
+        }
+        get {
+            return get(key: key)
+        }
+    }
+
+}
+
+// MARK: - set / get with Codable
+public extension Strorage {
+
+    func set<T: Codable>(value: T?, for key: String) -> Bool {
+        _ = memory.set(value: value, for: key)
+        _ = disk?.set(value: value, for: key)
+        return true
+    }
+
+    func get<T: Codable>(key: String) -> T? {
+        if let value = memory.get(key: key) as T? { return value }
+        if let value = disk?.get(key: key) as T? { return value }
+        return nil
+    }
+
+}
+
+extension Strorage {
+
+    func remove(key: String) {
+        _ = disk?.remove(key: key)
+        memory.remove(key: key)
+    }
+
+    func removeAll() {
+        memory.removeAll()
+        _ = disk?.removeAll()
+    }
+
+}
+
+
+
