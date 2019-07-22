@@ -42,19 +42,14 @@ public class Dynamic<T> {
     self.listener = listener
     listener?(value)
   }
-    
-  /// 信号量, 防止多线程资源抢夺
-  let semaphore = DispatchSemaphore(value: 1)
   
   var _value: T
   
   /// 值
   public var value: T {
     set{
-      semaphore.wait()
       _value = newValue
       listener?(value)
-      semaphore.signal()
     }
     get{
       return _value
