@@ -1,7 +1,7 @@
 //
-//  Pods
+//  Stone
 //
-//  Copyright (c) 2019/6/13 linhey - https://github.com/linhay
+//  Copyright (c) 2017 linhay - https://github.com/linhay
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -19,56 +19,25 @@
 //  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-
 import Foundation
 
-public class Strorage {
-
-    var memory: MemoryStrorage = MemoryStrorage()
-    var disk: DiskFileStorage? = nil
-
+// https://juejin.im/post/5a31f000518825585132b566
+public extension DispatchQueue {
+  
+  private static var onceTracker = [String]()
+  
+   static func once(file: String = #file, function: String = #function, line: Int = #line, block: () -> Void) {
+    let token = file + ":" + function + ":" + String(line)
+    once(token: token, block: block)
+  }
+  
+   static func once(token: String, block: () -> Void) {
+    objc_sync_enter(self)
+    defer { objc_sync_exit(self) }
+    
+    if onceTracker.contains(token) { return }
+    
+    onceTracker.append(token)
+    block()
+  }
 }
-
-// MARK: - subscript
-public extension Strorage {
-
-    subscript<T: Codable>(_ key: String) -> T? {
-        set { _ = set(value: newValue, for: key) }
-        get { return get(key: key) }
-    }
-
-}
-
-// MARK: - set / get with Codable
-public extension Strorage {
-
-    func set<T: Codable>(value: T?, for key: String) -> Bool {
-        _ = memory.set(value: value, for: key)
-        _ = disk?.set(value: value, for: key)
-        return true
-    }
-
-    func get<T: Codable>(key: String) -> T? {
-        if let value = memory.get(key: key) as T? { return value }
-        if let value = disk?.get(key: key) as T? { return value }
-        return nil
-    }
-
-}
-
-extension Strorage {
-
-    func remove(key: String) {
-        _ = disk?.remove(key: key)
-        memory.remove(key: key)
-    }
-
-    func removeAll() {
-        memory.removeAll()
-        _ = disk?.removeAll()
-    }
-
-}
-
-
-

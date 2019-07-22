@@ -1,7 +1,7 @@
 //
-//  Pods
+//  Stone
 //
-//  Copyright (c) 2019/6/13 linhey - https://github.com/linhay
+//  Copyright (c) 2017 linhay - https://github.com/linhay
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,53 +22,28 @@
 
 import Foundation
 
-public class Strorage {
+public extension Data {
 
-    var memory: MemoryStrorage = MemoryStrorage()
-    var disk: DiskFileStorage? = nil
+    /// get json
+    var jsonObject: Any? {
+        return try? JSONSerialization.jsonObject(with: self, options: [.allowFragments])
+    }
 
+    /// 获取bytes 数组
+    ///
+    /// - Parameter _: 类型
+    /// - Returns: bytes
+    func copyBytes<T>(as _: T.Type) -> [T] {
+        return withUnsafeBytes { (bytes: UnsafePointer<T>) in
+            Array(UnsafeBufferPointer(start: bytes, count: count / MemoryLayout<T>.stride))
+        }
+    }
+
+    /// 获取对应编码类型字符串
+    ///
+    /// - Parameter using: 字符串编码类型 | default: utf8
+    /// - Returns: 字符串
+    func toString(using: String.Encoding = .utf8) -> String? {
+        return String(data: self, encoding: using)
+    }
 }
-
-// MARK: - subscript
-public extension Strorage {
-
-    subscript<T: Codable>(_ key: String) -> T? {
-        set { _ = set(value: newValue, for: key) }
-        get { return get(key: key) }
-    }
-
-}
-
-// MARK: - set / get with Codable
-public extension Strorage {
-
-    func set<T: Codable>(value: T?, for key: String) -> Bool {
-        _ = memory.set(value: value, for: key)
-        _ = disk?.set(value: value, for: key)
-        return true
-    }
-
-    func get<T: Codable>(key: String) -> T? {
-        if let value = memory.get(key: key) as T? { return value }
-        if let value = disk?.get(key: key) as T? { return value }
-        return nil
-    }
-
-}
-
-extension Strorage {
-
-    func remove(key: String) {
-        _ = disk?.remove(key: key)
-        memory.remove(key: key)
-    }
-
-    func removeAll() {
-        memory.removeAll()
-        _ = disk?.removeAll()
-    }
-
-}
-
-
-

@@ -22,53 +22,27 @@
 
 import Foundation
 
-public class Strorage {
+public struct OptionalError: Error, CustomStringConvertible {
 
-    var memory: MemoryStrorage = MemoryStrorage()
-    var disk: DiskFileStorage? = nil
+    let file: String
+    let line: Int
 
-}
+    init(file: String,line: Int) {
+        self.file = file
+        self.line = line
+    }
 
-// MARK: - subscript
-public extension Strorage {
-
-    subscript<T: Codable>(_ key: String) -> T? {
-        set { _ = set(value: newValue, for: key) }
-        get { return get(key: key) }
+    public var description: String {
+        return "Nil returned at \(file): \(line)"
     }
 
 }
 
-// MARK: - set / get with Codable
-public extension Strorage {
+public extension Optional {
 
-    func set<T: Codable>(value: T?, for key: String) -> Bool {
-        _ = memory.set(value: value, for: key)
-        _ = disk?.set(value: value, for: key)
-        return true
+    func unwrap(file: String = #file,line: Int = #line) throws -> Wrapped {
+        guard let result = self else { throw OptionalError(file: file, line: line) }
+        return result
     }
-
-    func get<T: Codable>(key: String) -> T? {
-        if let value = memory.get(key: key) as T? { return value }
-        if let value = disk?.get(key: key) as T? { return value }
-        return nil
-    }
-
+    
 }
-
-extension Strorage {
-
-    func remove(key: String) {
-        _ = disk?.remove(key: key)
-        memory.remove(key: key)
-    }
-
-    func removeAll() {
-        memory.removeAll()
-        _ = disk?.removeAll()
-    }
-
-}
-
-
-

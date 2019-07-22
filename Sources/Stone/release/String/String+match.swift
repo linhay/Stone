@@ -1,7 +1,7 @@
 //
-//  Pods
+//  Stone
 //
-//  Copyright (c) 2019/6/13 linhey - https://github.com/linhay
+//  Copyright (c) 2017 linhay - https://github.com/linhay
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,53 +22,36 @@
 
 import Foundation
 
-public class Strorage {
+// MARK: - Emoji
+public extension String{
 
-    var memory: MemoryStrorage = MemoryStrorage()
-    var disk: DiskFileStorage? = nil
+    /// 提取: Emojis
+    var emojis: [String] {
+        let elements = unicodeScalars.compactMap { (scalar) -> String? in
+            switch scalar.value {
+            case 0x3030,
+                 0x00AE,
+                 0x00A9,
+                 0x1D000...0x1F77F,
+                 0x2100...0x278A,
+                 0x2793...0x27BF,
+                 0xFE00...0xFE0F,
+                 0x1F900...0x1F9FF:
+                return String(scalar)
+            default: return nil
+            }
+        }
+        return elements
+    }
 
-}
+    func match(pattern: String) -> Bool {
+        return self =~ pattern
+    }
 
-// MARK: - subscript
-public extension Strorage {
-
-    subscript<T: Codable>(_ key: String) -> T? {
-        set { _ = set(value: newValue, for: key) }
-        get { return get(key: key) }
+    func match(pattern: RegexPattern) -> Bool {
+        return self =~ pattern.pattern
     }
 
 }
-
-// MARK: - set / get with Codable
-public extension Strorage {
-
-    func set<T: Codable>(value: T?, for key: String) -> Bool {
-        _ = memory.set(value: value, for: key)
-        _ = disk?.set(value: value, for: key)
-        return true
-    }
-
-    func get<T: Codable>(key: String) -> T? {
-        if let value = memory.get(key: key) as T? { return value }
-        if let value = disk?.get(key: key) as T? { return value }
-        return nil
-    }
-
-}
-
-extension Strorage {
-
-    func remove(key: String) {
-        _ = disk?.remove(key: key)
-        memory.remove(key: key)
-    }
-
-    func removeAll() {
-        memory.removeAll()
-        _ = disk?.removeAll()
-    }
-
-}
-
 
 

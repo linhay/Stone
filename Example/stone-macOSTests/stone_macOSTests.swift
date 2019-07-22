@@ -129,6 +129,49 @@ public struct SQLiteStorage {
 
 }
 
+// MARK: - Gcd
+extension stone_macOSTests {
+
+    func test_Gcd() {
+        let expectation = XCTestExpectation(description: "Gcd.delay(label:, seconds:)")
+        // 获取转换因子
+        var info = mach_timebase_info_data_t()
+        mach_timebase_info(&info)
+        // 获取开始时间
+        let t0 = mach_absolute_time()
+        Gcd.delay(label: "label", seconds: 5) {
+            // 获取结束时间
+            let t1 = mach_absolute_time()
+            print(TimeInterval(Int(t1 - t0) * Int(info.numer) / Int(info.denom)) * 1e-9)
+            expectation.fulfill()
+        }
+        self.wait(for: [expectation], timeout: 10)
+    }
+
+}
+
+// MARK: - Optional
+extension stone_macOSTests {
+
+    func test_Optional() {
+        let a : Optional<Int> = 0
+        assert((try? a.unwrap()) == Optional(0))
+    }
+
+}
+
+// MARK: - RunTime
+extension stone_macOSTests {
+
+    func test_runtime() {
+        RunTime.print.ivars(from: NSView.self)
+        RunTime.print.protocols(from: NSView.self)
+        RunTime.print.methods(from: NSView.self)
+        RunTime.print.properties(from: NSView.self)
+    }
+
+}
+
 // MARK: - Sequence
 extension stone_macOSTests {
 

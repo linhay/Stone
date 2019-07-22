@@ -1,5 +1,5 @@
 //
-//  BLFoundation
+//  Stone
 //
 //  Copyright (c) 2017 linhay - https://github.com/linhay
 //
@@ -22,15 +22,9 @@
 
 import Foundation
 
-#if canImport(CommonCrypto)
-import CommonCrypto
-
-public extension String {
-
-    var md5: String {
-        guard let data = self.data(using: String.Encoding.utf8) else { return self }
-        return data.md5
-    }
+public extension CharacterSet{
+ // 对urlQuery中的value转义
+    static let urlQueryValueAllowed = CharacterSet(charactersIn: "&\"#%<>[]^`{|}=").inverted
 
 }
-#endif
+

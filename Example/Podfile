@@ -1,22 +1,23 @@
+
 use_frameworks!
+install! 'cocoapods', :generate_multiple_pod_projects => true
 
 target 'Stone_Example' do
+  platform :ios, '8.0'
   pod 'Stone', :path => '../'
-  
-  
 end
 
 target 'Stone_Tests' do
+  platform :ios, '8.0'
   pod 'Stone', :path => '../'
-  
 end
 
 target 'stone-macOS' do
+  platform :osx, '10.14'
   pod 'Stone', :path => '../'
-  
 end
 
 target 'stone-macOSTests' do
+  platform :osx, '10.14'
   pod 'Stone', :path => '../'
-  
 end

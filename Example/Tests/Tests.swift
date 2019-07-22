@@ -3,9 +3,6 @@ import Stone
 
 extension CGPoint {
 
-    func `isIn`(rect: CGRect) -> Bool {
-
-    }
 
 }
 
@@ -24,10 +21,5 @@ extension Collection {
 extension Tests {
 
 
-
-    func testSlice() {
-
-
-    }
 
 }

@@ -1,5 +1,5 @@
 //
-//  BLFoundation
+//  Stone
 //
 //  Copyright (c) 2017 linhay - https://github.com/linhay
 //
@@ -21,20 +21,45 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 
 import Foundation
-#if canImport(CommonCrypto)
-import CommonCrypto
 
-public extension Data {
+public extension Device {
   
-    var md5: String {
-        let data = self
-        let hash = data.withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> [UInt8] in
-            var hash = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
-            CC_MD5(bytes.baseAddress, CC_LONG(data.count), &hash)
-            return hash
-        }
-        return hash.map { String(format: "%02x", $0) }.joined()
+  /// 是否支持 Taptic Engine 功能
+    var isSupportTaptic: Bool {
+    guard let version = Device.versionCode.split(separator: ",").first?.filter ({ (item) -> Bool in
+      return !("a"..."z").contains(item)
+    }), let num = Int(version) else { return false }
+    return num > 8
+  }
+  
+  /// 是否越狱
+    var isJailbroken: Bool {
+    if Device.type == .simulator { return false }
+    let paths = ["/Applications/Cydia.app",
+                 "/private/var/lib/apt/",
+                 "/private/var/lib/cydia",
+                 "/private/var/stash"]
+    
+    if paths.first(where: { return FileManager.default.fileExists(atPath: $0) }) != nil { return true }
+    
+    if let bash = fopen("/bin/bash", "r") {
+      fclose(bash)
+      return true
     }
+    
+    if let uuid = CFUUIDCreate(nil),
+      let string = CFUUIDCreateString(nil, uuid) {
+      let path = "/private/" + (string as String)
+      do{
+        try "test".write(toFile: path, atomically: true, encoding: String.Encoding.utf8)
+        try FileManager.default.removeItem(atPath: path)
+        return true
+      }catch{
+        
+      }
+    }
+    return false
+  }
   
 }
-#endif
+
