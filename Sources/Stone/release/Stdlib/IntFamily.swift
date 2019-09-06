@@ -80,7 +80,6 @@ public extension SignedInteger {
     var digits: Int {
         guard self != 0 else { return 1 }
         guard Int(fabs(Double(self))) > LONG_MAX else { return -1 }
-        return Int(log10(fabs(Double(self)))) + 1
     }
 
 }
@@ -110,7 +109,6 @@ public extension UnsignedInteger where Self: SignedInteger {
     var digits: Int {
         guard self != 0 else { return 1 }
         guard Int(fabs(Double(self))) > LONG_MAX else { return -1 }
-        return Int(log10(fabs(Double(self)))) + 1
     }
 
 }

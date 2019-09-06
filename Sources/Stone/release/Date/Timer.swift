@@ -23,29 +23,30 @@
 import Foundation
 
 public extension Timer {
-  
-  @discardableResult
-   final class func after(_ interval: TimeInterval, clourse: @escaping (Timer?) -> ()) -> Timer {
-    var timer: Timer
-    timer = CFRunLoopTimerCreateWithHandler(kCFAllocatorDefault, CFAbsoluteTimeGetCurrent() + interval, 0, 0, 0, { (cfTimer) in
-      clourse(cfTimer)
-    })
-    return timer
-  }
-  
-  
-  @discardableResult
-   final class func every(_ interval: TimeInterval, clourse: @escaping (Timer?) -> ()) -> Timer {
-    var timer: Timer
-    timer = CFRunLoopTimerCreateWithHandler(kCFAllocatorDefault, CFAbsoluteTimeGetCurrent() + interval, interval, 0, 0, { (cfTimer) in
-      clourse(cfTimer)
-    })
-    return timer
-  }
-  
-   final func start(runLoop: RunLoop = .current, modes: [RunLoop.Mode] = [RunLoop.Mode.default]) {
-    modes.enumerated().reversed().forEach { (item) in
-      runLoop.add(self, forMode: item.element)
+
+    @discardableResult
+    final class func after(_ interval: TimeInterval, clourse: @escaping (Timer?) -> ()) -> Timer {
+        var timer: Timer
+        timer = CFRunLoopTimerCreateWithHandler(kCFAllocatorDefault, CFAbsoluteTimeGetCurrent() + interval, 0, 0, 0, { (cfTimer) in
+            clourse(cfTimer)
+        })
+        return timer
     }
-  }
+
+
+    @discardableResult
+    final class func every(_ interval: TimeInterval, clourse: @escaping (Timer?) -> ()) -> Timer {
+        var timer: Timer
+        timer = CFRunLoopTimerCreateWithHandler(kCFAllocatorDefault, CFAbsoluteTimeGetCurrent() + interval, interval, 0, 0, { (cfTimer) in
+            clourse(cfTimer)
+        })
+        return timer
+    }
+
+    final func start(runLoop: RunLoop = .current, modes: [RunLoop.Mode] = [RunLoop.Mode.default]) {
+        modes.enumerated().reversed().forEach { (item) in
+            runLoop.add(self, forMode: item.element)
+        }
+    }
+    
 }

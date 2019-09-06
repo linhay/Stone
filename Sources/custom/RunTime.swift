@@ -172,9 +172,6 @@ public extension RunTime {
 public extension RunTime.Print {
 
     func log(title: String, list: [[String]]) {
-
-
-
         var reList = [[String]](repeating: [String](repeating: "", count: list.count), count: list.first?.count ?? 0)
         for x in 0..<list.count {
             for y in 0..<list[x].count {

@@ -1,0 +1,19 @@
+disabled_rules: # rule identifiers to exclude from running
+  - line_length
+  - identifier_name
+  - cyclomatic_complexity
+  - function_body_length
+  - type_body_length
+  - force_cast
+  - force_try
+  - function_parameter_count
+  - shorthand_operator
+  - file_length
+  - type_name
+  - nesting
+  - large_tuple
+  - trailing_whitespace
+included: # paths to include during linting. `--path` is ignored if present.
+  - src
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - src/util/Images.swift

@@ -250,6 +250,7 @@
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				BCB026849BB9E022AFE93AA6 /* [CP] Embed Pods Frameworks */,
+				CDE698F923226DE000D5CBFD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -530,6 +531,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Stone_Example/Pods-Stone_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		CDE698F923226DE000D5CBFD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 		D0CF015E77970DD1BE8B70DC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
