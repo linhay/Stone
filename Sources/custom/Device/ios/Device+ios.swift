@@ -75,6 +75,9 @@ public extension Device {
         case "iPhone11,2":                          return (type: .iPhone,version: .iPhoneXS)
         case "iPhone11,4", "iPhone11,6":            return (type: .iPhone,version: .iPhoneXSMax)
         case "iPhone11,8":                          return (type: .iPhone,version: .iPhoneXR)
+        case "iPhone12,1":                          return (type: .iPhone,version: .iPhone11)
+        case "iPhone12,3":                          return (type: .iPhone,version: .iPhone11Pro)
+        case "iPhone12,5":                          return (type: .iPhone,version: .iPhone11ProMax)
             /*** iPad ***/
         case "iPad1,1":                                 return (type: .iPad,version: .iPad1)
         case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4":return (type: .iPad,version: .iPad2)
@@ -147,6 +150,9 @@ extension Device {
         case iPhoneXS
         case iPhoneXSMax
         case iPhoneXR
+        case iPhone11
+        case iPhone11Pro
+        case iPhone11ProMax
         /*** iPad ***/
         case iPad1
         case iPad2

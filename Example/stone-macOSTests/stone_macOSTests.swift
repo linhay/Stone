@@ -95,7 +95,6 @@ extension stone_macOSTests {
 
 }
 
-
 // MARK: - Sequence
 extension stone_macOSTests {
 
