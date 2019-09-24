@@ -1,5 +1,7 @@
 #! /bin/bash
 
+#目录切换
+cd ..
 value=./*.podspec
 file=${value##*/}
 
