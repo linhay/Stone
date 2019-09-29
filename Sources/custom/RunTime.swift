@@ -22,7 +22,6 @@
 
 import Foundation
 
-
 public class RunTime {
     
     public struct Print { }
@@ -35,31 +34,33 @@ public class RunTime {
     ///   - target: 被交换的方法名
     ///   - replace: 用于交换的方法名
     ///   - classType: 所属类型
-    public class func exchangeMethod(target: String, replace: String, class classType: AnyClass) {
-        exchangeMethod(selector: Selector(target), replace: Selector(replace), class: classType)
+    public static func exchange(selector: String, by newSelector: String, class classType: AnyClass) {
+        exchange(selector: Selector(selector), by: Selector(newSelector), class: classType)
     }
+
     /// 交换方法
     ///
     /// - Parameters:
     ///   - selector: 被交换的方法
-    ///   - replace: 用于交换的方法
+    ///   - by: 用于交换的方法
     ///   - classType: 所属类型
-    public class func exchangeMethod(selector: Selector, replace: Selector, class classType: AnyClass) {
-        let select1 = selector
-        let select2 = replace
-        let select1Method = class_getInstanceMethod(classType, select1)
-        let select2Method = class_getInstanceMethod(classType, select2)
-        let didAddMethod  = class_addMethod(classType,
-                                            select1,
-                                            method_getImplementation(select2Method!),
-                                            method_getTypeEncoding(select2Method!))
+    public static func exchange(selector: Selector, by newSelector: Selector, class classType: AnyClass) {
+        guard let method = class_getInstanceMethod(classType, selector) else {
+            assertionFailure("Runtime: 在类: \(classType) 中无法取得对应方法: \(selector.description)")
+            return
+        }
+
+        guard let newMethod = class_getInstanceMethod(classType, newSelector) else {
+            assertionFailure("Runtime: 在类: \(classType) 中无法取得对应方法: \(newSelector.description)")
+            return
+        }
+
+        let didAddMethod = class_addMethod(classType, selector, method_getImplementation(newMethod), method_getTypeEncoding(newMethod))
+
         if didAddMethod {
-            class_replaceMethod(classType,
-                                select2,
-                                method_getImplementation(select1Method!),
-                                method_getTypeEncoding(select1Method!))
-        }else {
-            method_exchangeImplementations(select1Method!, select2Method!)
+            class_replaceMethod(classType, newSelector, method_getImplementation(method), method_getTypeEncoding(method))
+        } else {
+            method_exchangeImplementations(method, newMethod)
         }
     }
     
@@ -126,7 +127,7 @@ public extension RunTime {
         let properties = class_copyPropertyList(classType, &propNum)
         var list = [objc_property_t]()
         for index in 0..<Int(propNum) {
-            if let prop = properties?[index]{
+            if let prop = properties?[index] {
                 list.append(prop)
             }
         }
@@ -143,7 +144,7 @@ public extension RunTime {
         let protocols = class_copyProtocolList(classType, &propNum)
         var list = [Protocol]()
         for index in 0..<Int(propNum) {
-            if let prop = protocols?[index]{
+            if let prop = protocols?[index] {
                 list.append(prop)
             }
         }
@@ -210,7 +211,7 @@ public extension RunTime.Print {
         log(title: "properties", list: list)
     }
     
-    func protocols(from classType: AnyClass){
+    func protocols(from classType: AnyClass) {
         let list = RunTime.protocols(from: classType).map({ [String(cString: protocol_getName($0))] })
         log(title: "protocols", list: list)
     }

@@ -28,8 +28,8 @@ public extension Device {
 
     /// 获取局域网IP
     var wlanAddress: String? {
-        var address : String?
-        var ifaddr : UnsafeMutablePointer<ifaddrs>?
+        var address: String?
+        var ifaddr: UnsafeMutablePointer<ifaddrs>?
         guard getifaddrs(&ifaddr) == 0 else { return nil }
         guard let firstAddr = ifaddr else { return nil }
         for ifptr in sequence(first: firstAddr, next: { $0.pointee.ifa_next }) {
@@ -55,19 +55,18 @@ public extension Device {
 
 #if os(iOS)
 import SystemConfiguration
-import SystemConfiguration.CaptiveNetwork
 
 public extension Device {
 
     struct WIFI {
-        public var ssid: String? = nil
-        public var bssid: String? = nil
-        public var ssidData: Data? = nil
+        public var ssid: String?
+        public var bssid: String?
+        public var ssidData: Data?
 
         public init?() {
             guard let interfaceNames = CNCopySupportedInterfaces() as? [String] else { return nil }
-            interfaceNames.forEach{ (name) in
-                guard let info = CNCopyCurrentNetworkInfo(name as CFString) as? [String:Any] else { return }
+            interfaceNames.forEach { (name) in
+                guard let info = CNCopyCurrentNetworkInfo(name as CFString) as? [String: Any] else { return }
                 if let res = info[kCNNetworkInfoKeySSID as String] as? String { ssid = res }
                 if let res = info[kCNNetworkInfoKeyBSSID as String]  as? String { bssid = res }
                 if let res = info[kCNNetworkInfoKeySSIDData as String] as? Data { ssidData = res }

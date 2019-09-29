@@ -20,11 +20,10 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 
-
 import Foundation
 
 /// 事件订阅
-public struct EventBus<Key: EventBusKey,Value: Any>: EventBusProtocol {
+public struct EventBus<Key: EventBusKey, Value: Any>: EventBusProtocol {
   
   public typealias EventBusKey = Key
   public typealias EventBusValue = Value
@@ -38,4 +37,3 @@ public struct EventBus<Key: EventBusKey,Value: Any>: EventBusProtocol {
   public init() { }
   
 }
-

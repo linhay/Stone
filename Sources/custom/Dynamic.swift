@@ -47,11 +47,11 @@ public class Dynamic<T> {
   
   /// 值
   public var value: T {
-    set{
+    set {
       _value = newValue
       listener?(value)
     }
-    get{
+    get {
       return _value
     }
   }

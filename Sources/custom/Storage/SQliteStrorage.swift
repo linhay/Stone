@@ -28,6 +28,4 @@ import SQLite3
 class SQLiteStrorage {
 
 }
-
-
 #endif

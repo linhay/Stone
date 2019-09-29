@@ -22,8 +22,7 @@
 
 import Foundation
 
-
-public struct EventBusItem<Key,Value> {
+public struct EventBusItem<Key, Value> {
     weak var observer: AnyObject?
     var key: Key
     var block: ((Value) -> Void)?
@@ -34,7 +33,7 @@ public protocol EventBusKey: Hashable { }
 public protocol EventBusProtocol {
     associatedtype EventBusKey: Hashable
     associatedtype EventBusValue
-    var events: [EventBusItem<EventBusKey,EventBusValue>] { get set }
+    var events: [EventBusItem<EventBusKey, EventBusValue>] { get set }
     var keySet: Set<EventBusKey> { get set }
 }
 
@@ -119,4 +118,3 @@ public extension EventBusProtocol {
     }
     
 }
-

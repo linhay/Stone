@@ -26,9 +26,7 @@ public extension Device {
   
   /// 是否支持 Taptic Engine 功能
     var isSupportTaptic: Bool {
-    guard let version = Device.versionCode.split(separator: ",").first?.filter ({ (item) -> Bool in
-      return !("a"..."z").contains(item)
-    }), let num = Int(version) else { return false }
+    guard let version = Device.versionCode.split(separator: ",").first?.filter({ !("a"..."z").contains($0) }), let num = Int(version) else { return false }
     return num > 8
   }
   
@@ -50,11 +48,11 @@ public extension Device {
     if let uuid = CFUUIDCreate(nil),
       let string = CFUUIDCreateString(nil, uuid) {
       let path = "/private/" + (string as String)
-      do{
+      do {
         try "test".write(toFile: path, atomically: true, encoding: String.Encoding.utf8)
         try FileManager.default.removeItem(atPath: path)
         return true
-      }catch{
+      } catch {
         
       }
     }
@@ -62,4 +60,3 @@ public extension Device {
   }
   
 }
-

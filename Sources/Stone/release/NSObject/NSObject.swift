@@ -22,24 +22,44 @@
 import Foundation
 
 public extension NSObject {
-
-    fileprivate struct NSObjectDataKey {
-        static let customKeys = UnsafeRawPointer(bitPattern:"com.Stone.customKeys".hashValue)!
+    
+    private struct NSObjectDataKey {
+        static let customKeys = UnsafeRawPointer(bitPattern: "com.Stone.customKeys".hashValue)!
     }
-
+    
     /// 存放自定义key-value
     var customKeys: [AnyHashable: Any] {
         get {
-            if let value = (objc_getAssociatedObject(self,NSObjectDataKey.customKeys) as? [AnyHashable: Any]) {
+            if let value: [AnyHashable: Any] = self.getAssociated(associatedKey: NSObjectDataKey.customKeys) {
                 return value
-            }else{
-                objc_setAssociatedObject(self,NSObjectDataKey.customKeys,[:],.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-                return (objc_getAssociatedObject(self,NSObjectDataKey.customKeys) as? [AnyHashable: Any])!
+            } else {
+                let value: [AnyHashable: Any] = [:]
+                self.setAssociated(value: value, associatedKey: NSObjectDataKey.customKeys)
+                return value
             }
         }
         set {
-            objc_setAssociatedObject(self,NSObjectDataKey.customKeys,newValue,.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            self.setAssociated(value: newValue, associatedKey: NSObjectDataKey.customKeys)
         }
     }
+    
+}
 
+// MARK: - Runtime
+public extension NSObject {
+    
+    func ivar<T>(for key: String) -> T? {
+        guard let ivar = class_getInstanceVariable(type(of: self), key) else { return nil }
+        return object_getIvar(self, ivar) as? T
+    }
+    
+    func setAssociated<T>(value: T, associatedKey: UnsafeRawPointer, policy: objc_AssociationPolicy = .OBJC_ASSOCIATION_RETAIN_NONATOMIC) {
+        objc_setAssociatedObject(self, associatedKey, value, policy)
+    }
+    
+    func getAssociated<T>(associatedKey: UnsafeRawPointer) -> T? {
+        let value = objc_getAssociatedObject(self, associatedKey) as? T
+        return value
+    }
+    
 }

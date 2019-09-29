@@ -42,9 +42,9 @@ public extension Array {
     /// - Parameters:
     ///   - range: A range for slice
     /// - Returns: An new Array
-     func slice(_ range: CountableClosedRange<Int>) -> Array<Element> {
+     func slice(_ range: CountableClosedRange<Int>) -> [Element] {
         if isEmpty { return self }
-        var range: (start: Int, end: Int) = (range.lowerBound,range.upperBound)
+        var range: (start: Int, end: Int) = (range.lowerBound, range.upperBound)
         if range.start < 0 { range.start = 0 }
         if range.end >= count { range.end = count - 1 }
         if range.start > range.end { return [] }
@@ -71,7 +71,7 @@ public extension Array {
     /// - Parameters:
     ///   - range: A range for slice
     /// - Returns: An new Array
-     func slice(_ range: CountableRange<Int>) -> Array<Element> {
+     func slice(_ range: CountableRange<Int>) -> [Element] {
         let ran: CountableClosedRange<Int> = range.lowerBound...(range.upperBound - 1)
         return self.slice(ran)
     }
@@ -89,7 +89,7 @@ public extension Array {
     /// - Parameters:
     ///   - range: A range for slice
     /// - Returns: An new Array
-     func slice(_ range: CountablePartialRangeFrom<Int>) -> Array<Element> {
+     func slice(_ range: CountablePartialRangeFrom<Int>) -> [Element] {
         guard (self.count - 1) >= range.lowerBound else { return [] }
         let ran: CountableClosedRange<Int> = range.lowerBound...(self.count - 1)
         return self.slice(ran)
@@ -108,7 +108,7 @@ public extension Array {
     /// - Parameters:
     ///   - range: A range for slice
     /// - Returns: An new Array
-     func slice(_ range: PartialRangeUpTo<Int>) -> Array<Element> {
+     func slice(_ range: PartialRangeUpTo<Int>) -> [Element] {
         guard range.upperBound - 1 > 0 else { return [] }
         let ran: CountableClosedRange<Int> = 0...(range.upperBound - 1)
         return self.slice(ran)
@@ -127,7 +127,7 @@ public extension Array {
     /// - Parameters:
     ///   - range: A range for slice
     /// - Returns: An new Array
-     func slice(_ range: PartialRangeThrough<Int>) -> Array<Element> {
+     func slice(_ range: PartialRangeThrough<Int>) -> [Element] {
         let ran: CountableClosedRange<Int> = 0...range.upperBound
         return self.slice(ran)
     }
@@ -229,5 +229,3 @@ public extension Array {
     }
 
 }
-
-

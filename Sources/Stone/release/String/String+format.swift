@@ -35,8 +35,8 @@ public extension String {
     var bool: Bool? {
         if let num = number { return num.boolValue }
         switch self.lowercased() {
-        case "1","true","yes": return true
-        case "0","false","no": return false
+        case "1", "true", "yes": return true
+        case "0", "false", "no": return false
         default: return nil
         }
     }

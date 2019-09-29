@@ -27,7 +27,7 @@ public struct OptionalError: Error, CustomStringConvertible {
     let file: String
     let line: Int
 
-    init(file: String,line: Int) {
+    init(file: String, line: Int) {
         self.file = file
         self.line = line
     }
@@ -40,7 +40,7 @@ public struct OptionalError: Error, CustomStringConvertible {
 
 public extension Optional {
 
-    func unwrap(file: String = #file,line: Int = #line) throws -> Wrapped {
+    func unwrap(file: String = #file, line: Int = #line) throws -> Wrapped {
         guard let result = self else { throw OptionalError(file: file, line: line) }
         return result
     }

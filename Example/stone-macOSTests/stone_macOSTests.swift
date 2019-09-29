@@ -98,6 +98,8 @@ extension stone_macOSTests {
 // MARK: - Sequence
 extension stone_macOSTests {
 
+    
+
     func test_sequence_count() {
         let list = [Int](0...9)
         assert(list.count({ $0 == 0 }) == 1)
@@ -123,6 +125,7 @@ extension stone_macOSTests {
 
 
 public struct SQLiteStorage {
+
 
 
 

@@ -22,9 +22,8 @@
 
 import Foundation
 
-public extension CharacterSet{
+public extension CharacterSet {
  // 对urlQuery中的value转义
     static let urlQueryValueAllowed = CharacterSet(charactersIn: "&\"#%<>[]^`{|}=").inverted
 
 }
-

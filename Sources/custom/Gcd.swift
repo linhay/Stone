@@ -29,7 +29,7 @@ public class Gcd {
     /// - Parameters:
     ///   - lock: 被锁元素
     ///   - closure: 闭包
-    public func synchronzed(_ lock: Any, closure: ()->()){
+    public func synchronzed(_ lock: Any, closure: () -> Void) {
         objc_sync_enter(lock)
         closure()
         objc_sync_exit(lock)
@@ -40,7 +40,7 @@ public class Gcd {
     /// - Parameters:
     ///   - time: 时间 (秒)
     ///   - event: 延时事件
-    public class func delay(_ time: Double,event: @escaping ()->()) {
+    public class func delay(_ time: Double, event: @escaping () -> Void) {
         let time = DispatchTime.now() + .milliseconds(Int(time * 1000))
         DispatchQueue.main.asyncAfter(deadline: time) {
             event()
@@ -53,7 +53,7 @@ public class Gcd {
     ///   - label: 标识
     ///   - time: 时间 (秒)
     ///   - event: 延时事件
-    public class func delay(label: String, seconds: TimeInterval, event: @escaping ()->()) {
+    public class func delay(label: String, seconds: TimeInterval, event: @escaping () -> Void) {
         let time = DispatchTime.now() + .milliseconds(Int(seconds * 1000))
         DispatchQueue(label: label).asyncAfter(deadline: time) {
             event()
@@ -79,14 +79,14 @@ public class Gcd {
     /// - Parameters:
     ///   - asyncs: 异步线程组
     ///   - notify: 全部完成回调
-    public class func group(asyncs: (() -> Void)..., notify: @escaping (()->())){
+    public class func group(asyncs: (() -> Void)..., notify: @escaping () -> Void) {
         let group = DispatchGroup()
         let randromLabel = "stone.gcd.group.\(arc4random())"
         var flag = 0
 
         for item in asyncs {
             let queue = DispatchQueue(label: randromLabel + ".\(flag)")
-            queue.async(group: group){
+            queue.async(group: group) {
                 item()
             }
             flag += 1
@@ -111,7 +111,6 @@ public class Gcd {
        return self.repeat(interval: interval, keep: 0, leeway: 0.1, event: event, completion: completion)
     }
 
-
     /// 定时
     ///
     /// - Parameters:
@@ -123,7 +122,7 @@ public class Gcd {
     @discardableResult
     public class func `repeat`(interval: TimeInterval,
                                keep: TimeInterval,
-                               event: @escaping ((_: DispatchSourceTimer) -> Void),
+                               event: @escaping (_: DispatchSourceTimer) -> Void,
                                completion: (() -> Void)? = nil) -> DispatchSourceTimer {
       return self.repeat(interval: interval, keep: keep, leeway: 0.1, event: event, completion: completion)
     }

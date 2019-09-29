@@ -22,9 +22,9 @@
 
 import Foundation
 
-public extension NSCoder{
+public extension NSCoder {
   
-    func decodeString(forKey key: String) -> String{
+    func decodeString(forKey key: String) -> String {
     return decodeObject(forKey: key) as? String ?? ""
   }
   

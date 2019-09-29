@@ -250,6 +250,7 @@
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				BCB026849BB9E022AFE93AA6 /* [CP] Embed Pods Frameworks */,
+				CD8EDCE82340B65F00C2CFD3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -269,6 +270,7 @@
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
 				16216BFC0BD3684EA56ABD69 /* [CP] Embed Pods Frameworks */,
+				CD8EDCE92340B66800C2CFD3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -289,6 +291,7 @@
 				CD4FEFF822B0938700D4C264 /* Frameworks */,
 				CD4FEFF922B0938700D4C264 /* Resources */,
 				EF78B5DEEB18AA5217B03FDE /* [CP] Embed Pods Frameworks */,
+				CD8EDCCE2340B61300C2CFD3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -308,6 +311,7 @@
 				CD4FF00722B0938800D4C264 /* Frameworks */,
 				CD4FF00822B0938800D4C264 /* Resources */,
 				043E54F543871C5F586D5514 /* [CP] Embed Pods Frameworks */,
+				CD8EDCEA2340B66C00C2CFD3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -530,6 +534,74 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Stone_Example/Pods-Stone_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		CD8EDCCE2340B61300C2CFD3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		CD8EDCE82340B65F00C2CFD3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		CD8EDCE92340B66800C2CFD3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		CD8EDCEA2340B66C00C2CFD3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 		D0CF015E77970DD1BE8B70DC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

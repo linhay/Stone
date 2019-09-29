@@ -33,17 +33,17 @@ public extension Data {
     ///
     /// - Parameter _: 类型
     /// - Returns: bytes
-    func copyBytes<T>(as _: T.Type) -> [T] {
-        return withUnsafeBytes { (bytes: UnsafePointer<T>) in
-            Array(UnsafeBufferPointer(start: bytes, count: count / MemoryLayout<T>.stride))
-        }
+    var bytes: [UInt8] {
+        // http://stackoverflow.com/questions/38097710/swift-3-changes-for-getbytes-method
+        return [UInt8](self)
     }
 
     /// 获取对应编码类型字符串
     ///
     /// - Parameter using: 字符串编码类型 | default: utf8
     /// - Returns: 字符串
-    func toString(using: String.Encoding = .utf8) -> String? {
-        return String(data: self, encoding: using)
+    func string(encoding: String.Encoding = .utf8) -> String? {
+        return String(data: self, encoding: encoding)
     }
+    
 }

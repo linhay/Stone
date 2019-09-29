@@ -24,8 +24,8 @@ import Foundation
 
 public extension Sequence {
 
-    func map<Value>(keyPath: KeyPath<Element,Value>) -> [Value] {
-        return self.map{ $0[keyPath: keyPath]}
+    func map<Value>(keyPath: KeyPath<Element, Value>) -> [Value] {
+        return self.map { $0[keyPath: keyPath] }
     }
 
     func count(_ `where`: (Iterator.Element) -> Bool) -> Int {

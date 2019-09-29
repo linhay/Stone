@@ -32,7 +32,7 @@ public extension URL {
         let list = item.components(separatedBy: "=")
         if list.count == 2 {
           dict[list.first!] = list.last!
-        }else if list.count > 2 {
+        } else if list.count > 2 {
           dict[list.first!] = list.dropLast().joined()
         }
       }
@@ -41,4 +41,3 @@ public extension URL {
   }
 
 }
-

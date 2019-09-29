@@ -29,14 +29,14 @@ public enum RegexPattern {
   case phone
   case email
   case number(equal: Int)
-  case numbers(low: Int,upper: Int)
+  case numbers(low: Int, upper: Int)
   case isPositiveInteger
-  case double(prefix: Int,suffix: Int)
+  case double(prefix: Int, suffix: Int)
   case custom(str: String)
 }
 
-public extension RegexPattern{
-  var pattern: String{
+public extension RegexPattern {
+  var pattern: String {
     switch self {
     case .none: return ""
     case .ipv4: return "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
@@ -59,17 +59,16 @@ public extension RegexPattern{
     }
   }
 
-  static func ==(lsh: RegexPattern,rsh: RegexPattern) -> Bool {
+  static func==(lsh: RegexPattern, rsh: RegexPattern) -> Bool {
     return lsh.pattern == rsh.pattern
   }
 }
 
-public func ==(lsh: [RegexPattern],rsh: [RegexPattern]) -> Bool {
+public func==(lsh: [RegexPattern], rsh: [RegexPattern]) -> Bool {
   let l = lsh.map({ (item) -> String in return item.pattern })
   let r = rsh.map({ (item) -> String in return item.pattern })
   return l == r
 }
-
 
 /*
  正则匹配库
@@ -79,18 +78,18 @@ public struct Regex {
   let regex: NSRegularExpression
   public let pattern: String
 
-  public init(_ pattern: String,ignoreCase: Bool = true) {
+  public init(_ pattern: String, ignoreCase: Bool = true) {
     self.pattern = pattern
     do {
       try regex = NSRegularExpression(pattern: pattern,
                                       options: ignoreCase ? .caseInsensitive: [])
-    } catch  {
+    } catch {
       regex = NSRegularExpression()
       print(error.localizedDescription)
     }
   }
 
-  public init(_ regexPattern: RegexPattern,ignoreCase: Bool = true) {
+  public init(_ regexPattern: RegexPattern, ignoreCase: Bool = true) {
     self.pattern = regexPattern.pattern
     do {
       try regex = NSRegularExpression(pattern: regexPattern.pattern,
@@ -108,7 +107,7 @@ public struct Regex {
   ///   - input: 输入字符串
   ///   - with: 替换文本
   /// - Returns: 替换后文本
-  public func replace(input: String, with: String) -> String{
+  public func replace(input: String, with: String) -> String {
     let strList = stringList(input: input)
     var output = input
     strList.forEach { (item) in

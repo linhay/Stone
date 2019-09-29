@@ -45,7 +45,7 @@ public extension Device {
         private var attributesOfFileSystem: [FileAttributeKey: Any] {
             do {
                 return try FileManager.default.attributesOfFileSystem(forPath: NSHomeDirectory())
-            }catch{
+            } catch {
                 return [:]
             }
         }
@@ -60,7 +60,7 @@ public extension Device {
                 let boundBuffer = $0.bindMemory(to: Int32.self)
                 return host_statistics(mach_host_self(), HOST_VM_INFO, boundBuffer.baseAddress, &infoCount)
             }
-            if (kernReturn != KERN_SUCCESS) { return -1 }
+            if kernReturn != KERN_SUCCESS { return -1 }
             return Int(vm_page_size) * Int(vmStats.free_count)
         }
         
@@ -72,7 +72,7 @@ public extension Device {
                 let boundBuffer = $0.bindMemory(to: Int32.self)
                 return task_info(mach_task_self_, task_flavor_t(TASK_BASIC_INFO), boundBuffer.baseAddress, &infoCount)
             }
-            if (kernReturn != KERN_SUCCESS) { return -1 }
+            if kernReturn != KERN_SUCCESS { return -1 }
             return Int(taskInfo.resident_size)
         }
     }

@@ -25,7 +25,7 @@ import Foundation
 public class Strorage {
 
     var memory: MemoryStrorage = MemoryStrorage()
-    var disk: DiskFileStorage? = nil
+    var disk: DiskFileStorage?
 
 }
 
@@ -69,6 +69,3 @@ extension Strorage {
     }
 
 }
-
-
-

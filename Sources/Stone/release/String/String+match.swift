@@ -23,7 +23,7 @@
 import Foundation
 
 // MARK: - Emoji
-public extension String{
+public extension String {
 
     /// 提取: Emojis
     var emojis: [String] {
@@ -53,5 +53,3 @@ public extension String{
     }
 
 }
-
-

@@ -98,7 +98,6 @@ public extension DiskFileStorage {
 
 }
 
-
 // MARK: - subscript
 public extension DiskFileStorage {
 
@@ -127,13 +126,13 @@ public extension DiskFileStorage {
 // MARK: - set / get with async
 public extension DiskFileStorage {
 
-    func set(data: Data?, for key: String, completion: ((Bool) -> ())? = nil) {
+    func set(data: Data?, for key: String, completion: ((Bool) -> Void)? = nil) {
         self.queue.async {
             completion?(self.set(data: data, for: key))
         }
     }
 
-    func get(key: String, completion: ((Data?) -> ())? = nil) {
+    func get(key: String, completion: ((Data?) -> Void)? = nil) {
         self.queue.async {
             completion?(self.get(key: key))
         }
@@ -148,12 +147,12 @@ public extension DiskFileStorage {
         let path = folderPath + key.md5
         if let data = data {
             return manager.createFile(atPath: path, contents: data, attributes: nil)
-        }else {
-            do{
+        } else {
+            do {
                 let url = URL(fileURLWithPath: path)
                 try manager.removeItem(at: url)
                 return true
-            }catch {
+            } catch {
                 return false
             }
         }
@@ -184,7 +183,6 @@ public extension DiskFileStorage {
         let url = URL(fileURLWithPath: self.folderPath + key.md5)
         return (try? self.manager.removeItem(at: url)) == nil
     }
-
 
     func remove(expired before: Date) -> Bool {
         guard let files = try? self.files() else { return false }

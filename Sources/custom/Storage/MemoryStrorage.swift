@@ -24,12 +24,11 @@ import Foundation
 
 class MemoryStrorageBox {
     let codable: Codable
-
+    
     init(_ codable: Codable) {
         self.codable = codable
     }
 }
-
 
 public class MemoryStrorage {
     
@@ -38,7 +37,6 @@ public class MemoryStrorage {
     init() { }
     
 }
-
 
 // MARK: - subscript
 public extension MemoryStrorage {
@@ -57,7 +55,7 @@ public extension MemoryStrorage {
         if let value = value {
             let box = MemoryStrorageBox(value)
             cache.setObject(box, forKey: key as NSString)
-        }else {
+        } else {
             remove(key: key)
         }
         return true
