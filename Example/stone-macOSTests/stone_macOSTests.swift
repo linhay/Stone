@@ -193,3 +193,10 @@ extension stone_macOSTests {
     }
 
 }
+
+
+// MARK: - String slice
+extension stone_macOSTests {
+
+
+}

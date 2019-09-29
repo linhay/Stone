@@ -1,7 +1,7 @@
 //
-//  Pods
+//  Stone
 //
-//  Copyright (c) 2019/6/12 linhey - https://github.com/linhay
+//  Copyright (c) 2017 linhay - https://github.com/linhay
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
