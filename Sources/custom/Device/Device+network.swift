@@ -55,6 +55,7 @@ public extension Device {
 
 #if os(iOS)
 import SystemConfiguration
+import SystemConfiguration.CaptiveNetwork
 
 public extension Device {
 
