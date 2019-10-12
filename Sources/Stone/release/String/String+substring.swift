@@ -54,7 +54,7 @@ public extension String {
   /// - Parameter range: 闭区间
   subscript(_ range: CountableClosedRange<Int>) -> String {
     if isEmpty { return "" }
-    var range: (start: Int, end: Int) = (range.lowerBound,range.upperBound)
+    var range: (start: Int, end: Int) = (range.lowerBound, range.upperBound)
     if range.start < 0 { range.start = 0 }
     if range.end >= count { range.end = count - 1 }
     if range.start > range.end { return "" }

@@ -25,6 +25,14 @@ import Foundation
 // MARK: - Emoji
 public extension String {
 
+    static func random(characters: String = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", length: Range<Int>) -> String {
+        let count = Int.random(in: length)
+        return (0...count).map { (_) in
+            let character = characters[Int.random(in: 0..<characters.count)] ?? ""
+            return String(character)
+        }.joined()
+    }
+
     /// 是否包含 Emojis
     var containEmoji: Bool {
         // http://stackoverflow.com/questions/30757193/find-out-if-character-in-string-is-emoji

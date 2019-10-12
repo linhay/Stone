@@ -19,37 +19,16 @@
 //  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-
 import Foundation
 
-public extension URL {
-    
-    /// 获取url参数集合
-    var querys: [String: String] {
-        var dict = [String: String]()
-        if let query = query {
-            query.components(separatedBy: "&").forEach { (item) in
-                let list = item.components(separatedBy: "=")
-                if list.count == 2 {
-                    dict[list.first!] = list.last!
-                } else if list.count > 2 {
-                    dict[list.first!] = list.dropLast().joined()
-                }
-            }
-        }
-        return dict
+extension DispatchTime: ExpressibleByIntegerLiteral {
+    public init(integerLiteral value: Int) {
+        self = DispatchTime.now() + .seconds(value)
     }
-    
 }
 
-// MARK: - ExpressibleByStringLiteral
-extension URL: ExpressibleByStringLiteral {
-    
-    public init(stringLiteral value: String) {
-        guard let url = URL(string: "\(value)") else {
-            preconditionFailure("This url: \(value) is not invalid")
-        }
-        self = url
+extension DispatchTime: ExpressibleByFloatLiteral {
+    public init(floatLiteral value: Double) {
+        self = DispatchTime.now() + .milliseconds(Int(value * 1000))
     }
-    
 }

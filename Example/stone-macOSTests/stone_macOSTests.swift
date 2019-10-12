@@ -26,6 +26,12 @@ class stone_macOSTests: XCTestCase {
 // MARK: - Array
 extension stone_macOSTests {
 
+
+    func test_string_random() {
+        print(String.random(length: 10..<20))
+    }
+
+
     func test_orderSet() {
         var set = OrderedSet<Int>()
         set.append(1)
