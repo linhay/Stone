@@ -22,9 +22,20 @@
 
 import Foundation
 
+// MARK: - Array where Element == String
+public extension Array where Element == String {
+    
+    static func random(characters: String = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", length: Range<Int>, count: Int) -> [String] {
+        return (0..<count).map { _ -> String in
+            return String.random(characters: characters, length: length)
+        }
+    }
+    
+}
+
 // MARK: - Emoji
 public extension String {
-
+    
     static func random(characters: String = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", length: Range<Int>) -> String {
         let count = Int.random(in: length)
         return (0...count).map { (_) in
@@ -32,7 +43,7 @@ public extension String {
             return String(character)
         }.joined()
     }
-
+    
     /// 是否包含 Emojis
     var containEmoji: Bool {
         // http://stackoverflow.com/questions/30757193/find-out-if-character-in-string-is-emoji
@@ -58,7 +69,7 @@ public extension String {
         }
         return false
     }
-
+    
     /// 提取: Emojis
     var emojis: [String] {
         let elements = unicodeScalars.compactMap { (scalar) -> String? in
@@ -82,13 +93,13 @@ public extension String {
         }
         return elements
     }
-
+    
     func match(pattern: String) -> Bool {
         return self =~ pattern
     }
-
+    
     func match(pattern: RegexPattern) -> Bool {
         return self =~ pattern.pattern
     }
-
+    
 }
