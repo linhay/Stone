@@ -26,6 +26,25 @@ class stone_macOSTests: XCTestCase {
 // MARK: - Array
 extension stone_macOSTests {
 
+    func test_orderSet() {
+        var set = OrderedSet<Int>()
+        set.append(1)
+        set.append(4)
+        set.append(1)
+        set.append(1)
+        set.append(1)
+        set.append(6)
+        set.append(4)
+        set.append(6)
+
+        var list = [Int]()
+        for a in set {
+            list.append(a)
+        }
+
+        assert(list == [1,4,6])
+    }
+
     func test_array_slice() {
         let list = list_0_9
 
