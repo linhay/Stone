@@ -27,5 +27,9 @@ import SQLite3
 
 class SQLiteStrorage {
 
+    init(path: String) {
+
+    }
+
 }
 #endif

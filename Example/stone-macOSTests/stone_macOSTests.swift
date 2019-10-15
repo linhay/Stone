@@ -9,10 +9,9 @@
 import XCTest
 import Stone
 @testable import stone_macOS
+import SQLite3
 
 extension Collection {
-
-
 
 }
 
@@ -21,16 +20,12 @@ class stone_macOSTests: XCTestCase {
     let list_a_z =  (UnicodeScalar("a").value ... UnicodeScalar("z").value).map({ String(UnicodeScalar($0)!) })
 }
 
-
-
 // MARK: - Array
 extension stone_macOSTests {
-
 
     func test_string_random() {
         print(String.random(length: 10..<20))
     }
-
 
     func test_orderSet() {
         var set = OrderedSet<Int>()
@@ -123,8 +118,6 @@ extension stone_macOSTests {
 // MARK: - Sequence
 extension stone_macOSTests {
 
-    
-
     func test_sequence_count() {
         let list = [Int](0...9)
         assert(list.count({ $0 == 0 }) == 1)
@@ -145,14 +138,6 @@ extension stone_macOSTests {
         assert(list.map(keyPath: \.id)   == list.map({ $0.id }))
         assert(list.map(keyPath: \.name) == list.map({ $0.name }))
     }
-
-}
-
-
-public struct SQLiteStorage {
-
-
-
 
 }
 
@@ -190,16 +175,34 @@ extension stone_macOSTests {
 // MARK: - RunTime
 extension stone_macOSTests {
 
-    func test_runtime() {
+    func test_runtime_prints() {
         RunTime.print.ivars(from: NSView.self)
         RunTime.print.protocols(from: NSView.self)
         RunTime.print.methods(from: NSView.self)
         RunTime.print.properties(from: NSView.self)
     }
 
+    @available(OSX 10.15, *)
+    func test_runtime_hook_setAssociatedObject() {
+        let object = NSObject()
+
+        RunTime.hookSetAssociatedObject { (object, point, value, policy) in
+            print("hook1: ", object, point, value!, policy)
+        }
+        objc_setAssociatedObject(object, UnsafeRawPointer(bitPattern: "test".hashValue)!, 1, .OBJC_ASSOCIATION_ASSIGN)
+
+        RunTime.hookSetAssociatedObject { (object, point, value, policy) in
+            print("hook2: ",object, point, value!, policy)
+        }
+        objc_setAssociatedObject(object, UnsafeRawPointer(bitPattern: "test".hashValue)!, 10, .OBJC_ASSOCIATION_ASSIGN)
+
+        RunTime.hookSetAssociatedObject(hook: nil)
+        objc_setAssociatedObject(object, UnsafeRawPointer(bitPattern: "test".hashValue)!, 20, .OBJC_ASSOCIATION_ASSIGN)
+    }
+
 }
 
-// MARK: - Sequence
+// MARK: - Storage
 extension stone_macOSTests {
 
     struct DiskFileStorageCodable: Codable,Equatable {
@@ -217,11 +220,51 @@ extension stone_macOSTests {
         assert(storage["codable"] == item)
     }
 
+
+
+
+    func test_storage_SQliteStorage() {
+        let database = SQLiteDatabase(name: "test")
+        print(database.path)
+    }
+
 }
 
 
 // MARK: - String slice
 extension stone_macOSTests {
 
+
+}
+
+final class SQLiteDatabase {
+    var dbPointer: OpaquePointer?
+    let path: String
+
+     convenience init(name: String) {
+        self.init(path: NSHomeDirectory() + "/Documents/stone/\(name).sqlite")
+    }
+
+     init(path: String) {
+        self.path = path
+        guard sqlite3_open_v2(path, &dbPointer, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, nil) == SQLITE_OK else {
+            assertionFailure()
+            return
+        }
+
+        let sql = "create table if not exists students "
+        + "( id integer primary key autoincrement, "
+        + "name text, height double)"
+
+//        if sqlite3_exec(dbPointer, sql.utf8CString, nil, nil, nil) == SQLITE_OK {
+//            print("建立資料表成功")
+//        }
+
+
+    }
+
+    deinit {
+        sqlite3_close(dbPointer)
+    }
 
 }
