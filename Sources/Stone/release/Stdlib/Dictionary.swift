@@ -96,7 +96,8 @@ public extension Dictionary {
   
 }
 
-extension Dictionary {
+// MARK: - value
+public extension Dictionary {
 
     func value<T>(for key: Key) -> T? {
         return self[key] as? T
